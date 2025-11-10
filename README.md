@@ -52,6 +52,19 @@ Optional: `REDIS_URL` (if not set, caching is disabled gracefully).
    - `npm run build`
    - `npm start`
 
+### API Docs (Swagger)
+- After starting the server, open: `http://localhost:3000/docs`
+- The OpenAPI spec is at `docs/openapi.json`.
+
+### Documentation
+- Swagger UI (live): `http://localhost:3000/docs`
+- OpenAPI JSON: `docs/openapi.json`
+- Markdown reference: `docs/API.md`
+
+### Testing
+- Run all tests: `npm test`
+- What’s covered: Auth, Products, and Orders endpoints with mocked Prisma (no real DB).
+
 ### Seed Admin (optional)
 Use Prisma Studio `npx prisma studio` and set a user `role` to `ADMIN`.
 
@@ -66,8 +79,11 @@ Use Prisma Studio `npx prisma studio` and set a user `role` to `ADMIN`.
 - `POST /api/orders` (USER)
 - `GET /api/orders` (AUTH)
 
+Full endpoint details: see `docs/API.md`.
+
 ### Tests
-Planned with Jest + Supertest and mocked Prisma.
+- `npm test`
+- Tests exercise all HTTP routes with mocked Prisma.
 
 ### Notes
 - If you enable Redis by setting `REDIS_URL`, install `ioredis`:

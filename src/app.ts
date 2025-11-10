@@ -5,6 +5,8 @@ import morgan from 'morgan';
 import routes from './routes';
 import { errorHandler } from './middleware/error';
 import { assertEnv } from './config/env';
+import swaggerUi from 'swagger-ui-express';
+import openapi from '../docs/openapi.json';
 
 assertEnv();
 
@@ -16,6 +18,7 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 app.get('/health', (_req, res) => res.json({ status: 'ok' }));
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(openapi));
 app.use('/api', routes);
 
 app.use(errorHandler);
