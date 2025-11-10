@@ -8,14 +8,49 @@
 - Rate limiting: express-rate-limit
 - Optional caching: Redis (ioredis)
 
+### Requirements
+- Node.js 18+
+- PostgreSQL 13+ (running and reachable)
+- Optional: Redis 6+ if you want caching (requires `ioredis`)
+
+### Environment Variables
+Create a `.env` file in the project root with the following variables:
+
+```
+# Server
+PORT=3000
+NODE_ENV=development
+
+# Database (required)
+# Format: postgresql://USER:PASSWORD@HOST:PORT/DATABASE?schema=public
+DATABASE_URL=postgresql://postgres:postgres@localhost:5432/a2sv_ecommerce?schema=public
+
+# JWT (required)
+JWT_SECRET=replace-with-a-strong-random-secret
+JWT_EXPIRES_IN=7d
+
+# Redis (optional)
+# If set, also install ioredis: npm i ioredis
+# REDIS_URL=redis://localhost:6379
+```
+
+Required: `DATABASE_URL`, `JWT_SECRET`.
+Optional: `REDIS_URL` (if not set, caching is disabled gracefully).
+
 ### Getting Started
-1. Install deps: `npm install`
-2. Configure env: create `.env` using `.env.example` values
-3. Prisma:
+1. Install dependencies:
+   - `npm install`
+2. Configure environment:
+   - Create `.env` as shown above
+3. Set up Prisma (database schema & client):
    - `npx prisma generate`
    - `npx prisma migrate dev --name init`
-4. Dev: `npm run dev`
-5. Build: `npm run build` and `npm start`
+4. Run in development:
+   - `npm run dev`
+   - Health check: `GET http://localhost:3000/health`
+5. Build and run in production:
+   - `npm run build`
+   - `npm start`
 
 ### Seed Admin (optional)
 Use Prisma Studio `npx prisma studio` and set a user `role` to `ADMIN`.
@@ -33,6 +68,11 @@ Use Prisma Studio `npx prisma studio` and set a user `role` to `ADMIN`.
 
 ### Tests
 Planned with Jest + Supertest and mocked Prisma.
+
+### Notes
+- If you enable Redis by setting `REDIS_URL`, install `ioredis`:
+  - `npm i ioredis`
+- Default server port is `3000` (overridable via `PORT`).
 
 
 
